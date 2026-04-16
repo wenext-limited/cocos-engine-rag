@@ -51,7 +51,8 @@
   2. Parsed text is split into chunks, each chunk retaining its heading hierarchy (breadcrumb context)
   3. Each chunk carries metadata: source URL, version, section title
   4. Chunk output is inspectable as JSON/JSONL files on disk before embedding begins
-**Plans**: TBD
+**Plans**:
+- [x] 03-01-PLAN.md — Document Parsing and Chunking
 
 ### Phase 4: Embedding & Vector Storage
 **Goal**: All doc chunks have embeddings and are queryable in Chroma, version-isolated
@@ -93,8 +94,8 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Infrastructure & Project Scaffold | 2/2 | Complete   | 2026-04-16 |
-| 2. Document Crawling | 1/2 | In progress | - |
-| 3. Document Parsing & Chunking | 0/? | Not started | - |
+| 2. Document Crawling | 2/2 | Complete | 2026-04-16 |
+| 3. Document Parsing & Chunking | 0/1 | Not started | - |
 | 4. Embedding & Vector Storage | 0/? | Not started | - |
 | 5. Search Service | 0/? | Not started | - |
 | 6. MCP Server | 0/? | Not started | - |

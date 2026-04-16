@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-16T06:07:40.151Z"
+last_updated: "2026-04-16T06:19:30.170Z"
 progress:
   total_phases: 6
-  completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  completed_phases: 3
+  total_plans: 5
+  completed_plans: 5
   percent: 100
 ---
 
@@ -22,7 +22,7 @@ progress:
 
 **Core Value**: AI 能通过自然语言准确检索到对应版本的 Cocos 官方文档片段，辅助开发者解决 Cocos 编程问题。
 
-**Current Focus**: Phase 2 — Document Crawling
+**Current Focus**: Phase 3 — Document Parsing & Chunking
 
 **Repository**: D:\learn\cocos_rag
 
@@ -32,8 +32,9 @@ progress:
 
 | Field | Value |
 |-------|-------|
-| **Current Phase** | 2 — Document Crawling |
-| **Current Plan** | 02-01-PLAN.md |
+| **Current Phase** | 3 — Document Parsing & Chunking |
+| **Current Plan** | 03-01-PLAN.md |
+| **Total Plans in Phase** | 1 |
 | **Phase Status** | Planning |
 | **Overall Progress** | 0/6 phases complete |
 
@@ -71,11 +72,14 @@ Phase 1: ░░░░░░░░░░░░░░░░░░░░ (not start
 | Phase 01-infrastructure-project-scaffold P02 | 150s | 3 tasks | 5 files |
 | Phase 02-document-crawling P01 | 10m | 2 tasks | 2 files |
 | Phase 02 P02 | 120s | 1 tasks | 1 files |
+| Phase 03 P01 | 10m | 4 tasks | 3 files |
 
 ## Accumulated Context
 
 ### Key Decisions
 
+- Phase 03: Decided to use a simple recursive DOM text extraction with Markdown header injection instead of complex LLM or AST-based chunking.
+- Phase 03: Chunks are separated precisely by heading hierarchy (H1-H6) to provide context for embedding.
 - Granularity: standard (6 phases chosen — within 5-8 target)
 - INFRA requirements placed in Phase 1 (scaffold-first) rather than spread across phases — ensures dependencies exist before coding starts
 - DOC-04/DOC-05 (parsing + chunking) separated from crawling into Phase 3 — chunking quality directly determines search quality, deserves isolated focus
@@ -112,8 +116,8 @@ _None_
 
 ## Session Continuity
 
-**Last session**: 2026-04-16 — Roadmap created, STATE.md initialized
-**Next action**: Start Phase 1 — run `/gsd-plan-phase 1`
+**Last session**: 2026-04-16 — Phase 3 planned automatically.
+**Next action**: Execute Phase 3 — run `/gsd-execute-phase 3`
 
 ---
 *Last updated: 2026-04-16*
