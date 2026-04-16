@@ -1,6 +1,6 @@
 import os
 from chromadb.api.types import EmbeddingFunction
-from src.core.db import get_chroma_client
+from core.db import get_chroma_client
 
 
 class VectorStoreManager:
