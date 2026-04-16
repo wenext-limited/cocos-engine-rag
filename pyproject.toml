@@ -1,0 +1,17 @@
+[project]
+name = "cocos-rag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chromadb>=1.5.7",
+    "langchain-openai>=1.1.13",
+    "mcp>=1.27.0",
+    "python-dotenv>=1.2.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
