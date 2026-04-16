@@ -25,7 +25,7 @@
   3. A top-level `build_index.py` (or similar) script exists and prints a usage/help message
   4. Project directory structure is documented and consistent with the codebase
 **Plans**:
-- [ ] 01-01-PLAN.md — Initialize Project and Dependencies
+- [x] 01-01-PLAN.md — Initialize Project and Dependencies
 - [ ] 01-02-PLAN.md — Create Skeleton Scripts and Tests
 
 ### Phase 2: Document Crawling
