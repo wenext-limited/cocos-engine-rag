@@ -52,10 +52,24 @@
 
 ## Traceability
 
-| Requirement | Phase |
-|-------------|-------|
-| DOC-01 ~ DOC-06 | Phase 1: 文档爬取与处理 |
-| EMB-01 ~ EMB-03 | Phase 2: 向量化与索引构建 |
-| SEARCH-01 ~ SEARCH-03 | Phase 3: 检索服务 |
-| MCP-01 ~ MCP-04 | Phase 4: MCP Server |
-| INFRA-01 ~ INFRA-03 | 贯穿各阶段 |
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| INFRA-01 | Phase 1: Infrastructure & Project Scaffold | Pending |
+| INFRA-02 | Phase 1: Infrastructure & Project Scaffold | Pending |
+| INFRA-03 | Phase 1: Infrastructure & Project Scaffold | Pending |
+| DOC-01 | Phase 2: Document Crawling | Pending |
+| DOC-02 | Phase 2: Document Crawling | Pending |
+| DOC-03 | Phase 2: Document Crawling | Pending |
+| DOC-06 | Phase 2: Document Crawling | Pending |
+| DOC-04 | Phase 3: Document Parsing & Chunking | Pending |
+| DOC-05 | Phase 3: Document Parsing & Chunking | Pending |
+| EMB-01 | Phase 4: Embedding & Vector Storage | Pending |
+| EMB-02 | Phase 4: Embedding & Vector Storage | Pending |
+| EMB-03 | Phase 4: Embedding & Vector Storage | Pending |
+| SEARCH-01 | Phase 5: Search Service | Pending |
+| SEARCH-02 | Phase 5: Search Service | Pending |
+| SEARCH-03 | Phase 5: Search Service | Pending |
+| MCP-01 | Phase 6: MCP Server | Pending |
+| MCP-02 | Phase 6: MCP Server | Pending |
+| MCP-03 | Phase 6: MCP Server | Pending |
+| MCP-04 | Phase 6: MCP Server | Pending |
