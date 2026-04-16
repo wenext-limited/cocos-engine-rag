@@ -3,6 +3,8 @@ import time
 import urllib.parse
 from collections import deque
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
 
@@ -30,6 +32,16 @@ def crawl_docs(start_url, base_dir, version_prefix, delay=0.5):
 
     session = requests.Session()
     session.headers.update({"User-Agent": "CocosRAGCrawler/1.0 (Python/requests)"})
+
+    retry_strategy = Retry(
+        total=5,
+        backoff_factor=1,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["HEAD", "GET", "OPTIONS"],
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
 
     while queue:
         url = queue.popleft()
