@@ -43,5 +43,34 @@ uv run src/indexer.py
 To start the MCP Server (stdio transport for Claude Desktop / OpenCode):
 
 ```bash
-uv run src/server.py
+# Ensure your PYTHONPATH includes src or run as a module:
+PYTHONPATH=src uv run python -m src.server
+```
+
+### Claude Desktop Configuration
+
+Add the following to your Claude Desktop configuration file (`claude_desktop_config.json`):
+
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`  
+**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "cocos-rag": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "-m",
+        "src.server"
+      ],
+      "env": {
+        "PYTHONPATH": "src",
+        "OPENAI_API_KEY": "YOUR_OPENAI_API_KEY"
+      },
+      "cwd": "ABSOLUTE_PATH_TO_COCOS_RAG_DIRECTORY"
+    }
+  }
+}
 ```
