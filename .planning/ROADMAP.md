@@ -24,7 +24,9 @@
   2. README explains how to set OPENAI_API_KEY, run the crawler, and start the MCP server
   3. A top-level `build_index.py` (or similar) script exists and prints a usage/help message
   4. Project directory structure is documented and consistent with the codebase
-**Plans**: TBD
+**Plans**:
+- [ ] 01-01-PLAN.md — Initialize Project and Dependencies
+- [ ] 01-02-PLAN.md — Create Skeleton Scripts and Tests
 
 ### Phase 2: Document Crawling
 **Goal**: Both versions of Cocos Creator docs are fully crawled and saved locally
@@ -88,7 +90,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure & Project Scaffold | 0/? | Not started | - |
+| 1. Infrastructure & Project Scaffold | 2/2 | Not started | - |
 | 2. Document Crawling | 0/? | Not started | - |
 | 3. Document Parsing & Chunking | 0/? | Not started | - |
 | 4. Embedding & Vector Storage | 0/? | Not started | - |
