@@ -8,8 +8,8 @@
 - [x] **Phase 2: Document Crawling** — Crawl all pages for both doc versions with rate limiting and raw storage (completed 2026-04-16)
 - [ ] **Phase 3: Document Parsing & Chunking** — Clean HTML to text, split into searchable chunks with metadata
 - [ ] **Phase 4: Embedding & Vector Storage** — Generate OpenAI embeddings with resume support, store in Chroma
-- [ ] **Phase 5: Search Service** — Natural language semantic search returning ranked chunks with source metadata
-- [ ] **Phase 6: MCP Server** — MCP-compliant server exposing search_cocos_docs tool via stdio
+- [x] **Phase 5: Search Service** — Natural language semantic search returning ranked chunks with source metadata
+- [x] **Phase 6: MCP Server** — MCP-compliant server exposing search_cocos_docs tool via stdio (completed 2026-04-16)
 
 ---
 
@@ -76,7 +76,8 @@
   2. Each result includes: chunk text, source URL, section title, relevance score
   3. Calling search without a version argument defaults to querying the 3.8.8 collection
   4. Querying a non-existent version returns a clear error rather than silently returning empty results
-**Plans**: TBD
+**Plans**:
+- [x] 05-01-PLAN.md — Implement Search Service
 
 ### Phase 6: MCP Server
 **Goal**: Claude / OpenCode can discover and call search_cocos_docs via MCP stdio transport
@@ -87,7 +88,8 @@
   2. MCP tool list includes `search_cocos_docs` with correct JSON Schema (query, version, top_k params)
   3. A Claude Desktop / OpenCode config snippet calling the server is documented and tested
   4. Tool call returns a JSON array of result objects that an LLM can read directly without post-processing
-**Plans**: TBD
+**Plans**:
+- [x] 06-01-PLAN.md — Phase 6 Plan: MCP Server
 
 ---
 
@@ -99,8 +101,8 @@
 | 2. Document Crawling | 2/2 | Complete | 2026-04-16 |
 | 3. Document Parsing & Chunking | 0/1 | Not started | - |
 | 4. Embedding & Vector Storage | 1/2 | Planned | - |
-| 5. Search Service | 0/? | Not started | - |
-| 6. MCP Server | 0/? | Not started | - |
+| 5. Search Service | 1/1 | Complete | 2026-04-16 |
+| 6. MCP Server | 1/1 | Complete   | 2026-04-16 |
 
 ---
 

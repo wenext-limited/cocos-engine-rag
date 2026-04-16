@@ -19,16 +19,16 @@
 
 ### SEARCH — 检索
 
-- [ ] **SEARCH-01**: 根据自然语言 query 和指定版本，返回 Top-K 相关文档片段
-- [ ] **SEARCH-02**: 返回结果包含：文档片段内容、来源 URL、所属章节标题
-- [ ] **SEARCH-03**: 支持不指定版本时默认查询最新版（3.8.8）
+- [x] **SEARCH-01**: 根据自然语言 query 和指定版本，返回 Top-K 相关文档片段
+- [x] **SEARCH-02**: 返回结果包含：文档片段内容、来源 URL、所属章节标题
+- [x] **SEARCH-03**: 支持不指定版本时默认查询最新版（3.8.8）
 
 ### MCP — 服务接口
 
-- [ ] **MCP-01**: 构建符合 MCP 规范的 Python Server
-- [ ] **MCP-02**: 暴露 `search_cocos_docs(query: str, version: str = "3.8.8", top_k: int = 5)` 工具
-- [ ] **MCP-03**: MCP Server 可通过 stdio 启动（兼容 Claude Desktop / OpenCode MCP 配置）
-- [ ] **MCP-04**: 工具调用返回结构化结果（JSON），AI 能直接使用
+- [x] **MCP-01**: 构建符合 MCP 规范的 Python Server
+- [x] **MCP-02**: 暴露 `search_cocos_docs(query: str, version: str = "3.8.8", top_k: int = 5)` 工具
+- [x] **MCP-03**: MCP Server 可通过 stdio 启动（兼容 Claude Desktop / OpenCode MCP 配置）
+- [x] **MCP-04**: 工具调用返回结构化结果（JSON），AI 能直接使用
 
 ### INFRA — 基础设施 & 脚本
 
@@ -66,10 +66,10 @@
 | EMB-01 | Phase 4: Embedding & Vector Storage | Complete |
 | EMB-02 | Phase 4: Embedding & Vector Storage | Complete |
 | EMB-03 | Phase 4: Embedding & Vector Storage | Complete |
-| SEARCH-01 | Phase 5: Search Service | Pending |
-| SEARCH-02 | Phase 5: Search Service | Pending |
-| SEARCH-03 | Phase 5: Search Service | Pending |
-| MCP-01 | Phase 6: MCP Server | Pending |
-| MCP-02 | Phase 6: MCP Server | Pending |
-| MCP-03 | Phase 6: MCP Server | Pending |
-| MCP-04 | Phase 6: MCP Server | Pending |
+| SEARCH-01 | Phase 5: Search Service | Complete |
+| SEARCH-02 | Phase 5: Search Service | Complete |
+| SEARCH-03 | Phase 5: Search Service | Complete |
+| MCP-01 | Phase 6: MCP Server | Complete |
+| MCP-02 | Phase 6: MCP Server | Complete |
+| MCP-03 | Phase 6: MCP Server | Complete |
+| MCP-04 | Phase 6: MCP Server | Complete |
