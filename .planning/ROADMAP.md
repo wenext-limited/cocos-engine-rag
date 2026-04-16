@@ -5,7 +5,7 @@
 ## Phases
 
 - [x] **Phase 1: Infrastructure & Project Scaffold** — Dependency management, build scripts, and README foundation (completed 2026-04-16)
-- [ ] **Phase 2: Document Crawling** — Crawl all pages for both doc versions with rate limiting and raw storage
+- [x] **Phase 2: Document Crawling** — Crawl all pages for both doc versions with rate limiting and raw storage (completed 2026-04-16)
 - [ ] **Phase 3: Document Parsing & Chunking** — Clean HTML to text, split into searchable chunks with metadata
 - [ ] **Phase 4: Embedding & Vector Storage** — Generate OpenAI embeddings with resume support, store in Chroma
 - [ ] **Phase 5: Search Service** — Natural language semantic search returning ranked chunks with source metadata
@@ -91,7 +91,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Infrastructure & Project Scaffold | 2/2 | Complete   | 2026-04-16 |
-| 2. Document Crawling | 0/? | Not started | - |
+| 2. Document Crawling | 1/1 | Complete   | 2026-04-16 |
 | 3. Document Parsing & Chunking | 0/? | Not started | - |
 | 4. Embedding & Vector Storage | 0/? | Not started | - |
 | 5. Search Service | 0/? | Not started | - |

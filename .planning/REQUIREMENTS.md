@@ -4,12 +4,12 @@
 
 ### DOC — 文档爬取与处理
 
-- [ ] **DOC-01**: 系统能爬取 docs.cocos.com 3.7.3 中文版所有文档页面
-- [ ] **DOC-02**: 系统能爬取 docs.cocos.com 3.8.8 中文版所有文档页面
-- [ ] **DOC-03**: 爬虫遵守请求频率限制（delay/retry），避免被封禁
+- [x] **DOC-01**: 系统能爬取 docs.cocos.com 3.7.3 中文版所有文档页面
+- [x] **DOC-02**: 系统能爬取 docs.cocos.com 3.8.8 中文版所有文档页面
+- [x] **DOC-03**: 爬虫遵守请求频率限制（delay/retry），避免被封禁
 - [ ] **DOC-04**: 将 HTML 页面解析为干净的 Markdown/纯文本（去掉导航栏、广告、无关内容）
 - [ ] **DOC-05**: 对文档文本进行分块（chunk），每块保留标题上下文
-- [ ] **DOC-06**: 保存原始爬取数据到本地（支持重新处理，无需重复爬取）
+- [x] **DOC-06**: 保存原始爬取数据到本地（支持重新处理，无需重复爬取）
 
 ### EMB — 向量化
 
@@ -57,10 +57,10 @@
 | INFRA-01 | Phase 1: Infrastructure & Project Scaffold | Complete |
 | INFRA-02 | Phase 1: Infrastructure & Project Scaffold | Complete |
 | INFRA-03 | Phase 1: Infrastructure & Project Scaffold | Complete |
-| DOC-01 | Phase 2: Document Crawling | Pending |
-| DOC-02 | Phase 2: Document Crawling | Pending |
-| DOC-03 | Phase 2: Document Crawling | Pending |
-| DOC-06 | Phase 2: Document Crawling | Pending |
+| DOC-01 | Phase 2: Document Crawling | Complete |
+| DOC-02 | Phase 2: Document Crawling | Complete |
+| DOC-03 | Phase 2: Document Crawling | Complete |
+| DOC-06 | Phase 2: Document Crawling | Complete |
 | DOC-04 | Phase 3: Document Parsing & Chunking | Pending |
 | DOC-05 | Phase 3: Document Parsing & Chunking | Pending |
 | EMB-01 | Phase 4: Embedding & Vector Storage | Pending |
