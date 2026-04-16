@@ -32,7 +32,7 @@
 
 ### INFRA — 基础设施 & 脚本
 
-- [ ] **INFRA-01**: 提供一键构建索引脚本（爬取 → 清洗 → 向量化 → 入库）
+- [x] **INFRA-01**: 提供一键构建索引脚本（爬取 → 清洗 → 向量化 → 入库）
 - [x] **INFRA-02**: 提供 README，说明如何配置 OpenAI Key、运行爬虫、启动 MCP Server
 - [x] **INFRA-03**: 依赖管理（requirements.txt 或 pyproject.toml）
 
@@ -54,7 +54,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 1: Infrastructure & Project Scaffold | Pending |
+| INFRA-01 | Phase 1: Infrastructure & Project Scaffold | Complete |
 | INFRA-02 | Phase 1: Infrastructure & Project Scaffold | Complete |
 | INFRA-03 | Phase 1: Infrastructure & Project Scaffold | Complete |
 | DOC-01 | Phase 2: Document Crawling | Pending |
