@@ -65,7 +65,7 @@
   4. Chroma DB persists to disk and can be loaded in a fresh Python process without re-embedding
 **Plans**:
 - [x] 04-01-PLAN.md — Phase 4 Plan: Embedding & Vector Storage
-- [ ] 04-02-PLAN.md — Fix ChromaDB Persistence Directory (Gap Closure)
+- [x] 04-02-PLAN.md — Fix ChromaDB Persistence Directory (Gap Closure)
 
 ### Phase 5: Search Service
 **Goal**: Given a natural language query and version, the system returns relevant doc chunks with full provenance
