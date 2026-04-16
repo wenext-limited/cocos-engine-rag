@@ -1,0 +1,9 @@
+.data/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+.env
+*.log
+server_out.txt
+*.pyc
