@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-16T06:19:30.170Z"
+last_updated: "2026-04-16T06:26:48.006Z"
 progress:
   total_phases: 6
-  completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
+  completed_phases: 4
+  total_plans: 6
+  completed_plans: 6
   percent: 100
 ---
 
@@ -22,7 +22,7 @@ progress:
 
 **Core Value**: AI 能通过自然语言准确检索到对应版本的 Cocos 官方文档片段，辅助开发者解决 Cocos 编程问题。
 
-**Current Focus**: Phase 3 — Document Parsing & Chunking
+**Current Focus**: Phase 4 — Embedding & Vector Storage
 
 **Repository**: D:\learn\cocos_rag
 
@@ -32,11 +32,11 @@ progress:
 
 | Field | Value |
 |-------|-------|
-| **Current Phase** | 3 — Document Parsing & Chunking |
-| **Current Plan** | 03-01-PLAN.md |
+| **Current Phase** | 4 — Embedding & Vector Storage |
+| **Current Plan** | 04-01-PLAN.md |
 | **Total Plans in Phase** | 1 |
-| **Phase Status** | Planning |
-| **Overall Progress** | 0/6 phases complete |
+| **Phase Status** | Complete |
+| **Overall Progress** | 4/6 phases complete |
 
 ```
 Progress: [█████░░░░░] 50%
@@ -49,10 +49,10 @@ Phase 1: ░░░░░░░░░░░░░░░░░░░░ (not start
 
 | Phase | Goal | Status |
 |-------|------|--------|
-| 1 | Infrastructure & Project Scaffold | ⬜ Not started |
-| 2 | Document Crawling | ⬜ Not started |
-| 3 | Document Parsing & Chunking | ⬜ Not started |
-| 4 | Embedding & Vector Storage | ⬜ Not started |
+| 1 | Infrastructure & Project Scaffold | ✅ Complete |
+| 2 | Document Crawling | ✅ Complete |
+| 3 | Document Parsing & Chunking | ✅ Complete |
+| 4 | Embedding & Vector Storage | ✅ Complete |
 | 5 | Search Service | ⬜ Not started |
 | 6 | MCP Server | ⬜ Not started |
 
@@ -73,11 +73,14 @@ Phase 1: ░░░░░░░░░░░░░░░░░░░░ (not start
 | Phase 02-document-crawling P01 | 10m | 2 tasks | 2 files |
 | Phase 02 P02 | 120s | 1 tasks | 1 files |
 | Phase 03 P01 | 10m | 4 tasks | 3 files |
+| Phase 04 P01 | 120s | 4 tasks | 4 files |
 
 ## Accumulated Context
 
 ### Key Decisions
 
+- Phase 04: Used md5 hash of URL and content for document IDs in ChromaDB to enable resumability and deduplication
+- Phase 04: Separated VectorStoreManager and EmbeddingService for cleaner testing and modularity
 - Phase 03: Decided to use a simple recursive DOM text extraction with Markdown header injection instead of complex LLM or AST-based chunking.
 - Phase 03: Chunks are separated precisely by heading hierarchy (H1-H6) to provide context for embedding.
 - Granularity: standard (6 phases chosen — within 5-8 target)
@@ -116,8 +119,8 @@ _None_
 
 ## Session Continuity
 
-**Last session**: 2026-04-16 — Phase 3 planned automatically.
-**Next action**: Execute Phase 3 — run `/gsd-execute-phase 3`
+**Last session**: 2026-04-16 — Phase 4 executed successfully.
+**Next action**: Execute Phase 5 — run `/gsd-execute-phase 5`
 
 ---
 *Last updated: 2026-04-16*

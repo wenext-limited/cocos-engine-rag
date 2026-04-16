@@ -13,9 +13,9 @@
 
 ### EMB — 向量化
 
-- [ ] **EMB-01**: 使用 OpenAI text-embedding-3-small 为每个文档块生成向量嵌入
-- [ ] **EMB-02**: 嵌入过程支持断点续传（避免 API 中途失败重头来过）
-- [ ] **EMB-03**: 向量数据存入 Chroma，3.7.3 和 3.8.8 分别存入独立 collection
+- [x] **EMB-01**: 使用 OpenAI text-embedding-3-small 为每个文档块生成向量嵌入
+- [x] **EMB-02**: 嵌入过程支持断点续传（避免 API 中途失败重头来过）
+- [x] **EMB-03**: 向量数据存入 Chroma，3.7.3 和 3.8.8 分别存入独立 collection
 
 ### SEARCH — 检索
 
@@ -63,9 +63,9 @@
 | DOC-06 | Phase 2: Document Crawling | Complete |
 | DOC-04 | Phase 3: Document Parsing & Chunking | Complete |
 | DOC-05 | Phase 3: Document Parsing & Chunking | Complete |
-| EMB-01 | Phase 4: Embedding & Vector Storage | Pending |
-| EMB-02 | Phase 4: Embedding & Vector Storage | Pending |
-| EMB-03 | Phase 4: Embedding & Vector Storage | Pending |
+| EMB-01 | Phase 4: Embedding & Vector Storage | Complete |
+| EMB-02 | Phase 4: Embedding & Vector Storage | Complete |
+| EMB-03 | Phase 4: Embedding & Vector Storage | Complete |
 | SEARCH-01 | Phase 5: Search Service | Pending |
 | SEARCH-02 | Phase 5: Search Service | Pending |
 | SEARCH-03 | Phase 5: Search Service | Pending |

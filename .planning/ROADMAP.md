@@ -63,7 +63,8 @@
   2. Embedding job can be interrupted and resumed — already-embedded chunks are not re-processed
   3. 3.7.3 chunks live in a dedicated Chroma collection separate from 3.8.8 chunks
   4. Chroma DB persists to disk and can be loaded in a fresh Python process without re-embedding
-**Plans**: TBD
+**Plans**:
+- [x] 04-01-PLAN.md — Phase 4 Plan: Embedding & Vector Storage
 
 ### Phase 5: Search Service
 **Goal**: Given a natural language query and version, the system returns relevant doc chunks with full provenance
@@ -96,7 +97,7 @@
 | 1. Infrastructure & Project Scaffold | 2/2 | Complete   | 2026-04-16 |
 | 2. Document Crawling | 2/2 | Complete | 2026-04-16 |
 | 3. Document Parsing & Chunking | 0/1 | Not started | - |
-| 4. Embedding & Vector Storage | 0/? | Not started | - |
+| 4. Embedding & Vector Storage | 1/1 | Planned | - |
 | 5. Search Service | 0/? | Not started | - |
 | 6. MCP Server | 0/? | Not started | - |
 
