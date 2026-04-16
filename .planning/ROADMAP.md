@@ -38,7 +38,9 @@
   3. Crawler respects a configurable delay between requests and retries on failures
   4. Raw crawl output is saved to disk — re-running the pipeline never re-crawls unless explicitly forced
   5. Crawl can be resumed after interruption without re-downloading already-saved pages
-**Plans**: TBD
+**Plans**:
+- [x] 02-01-PLAN.md — Document Crawler Implementation
+- [ ] 02-02-PLAN.md — Add Network Retry Logic (Gap Closure)
 
 ### Phase 3: Document Parsing & Chunking
 **Goal**: Raw crawl data is transformed into clean, structured text chunks ready for embedding
@@ -91,7 +93,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Infrastructure & Project Scaffold | 2/2 | Complete   | 2026-04-16 |
-| 2. Document Crawling | 1/1 | Complete   | 2026-04-16 |
+| 2. Document Crawling | 1/2 | In progress | - |
 | 3. Document Parsing & Chunking | 0/? | Not started | - |
 | 4. Embedding & Vector Storage | 0/? | Not started | - |
 | 5. Search Service | 0/? | Not started | - |
