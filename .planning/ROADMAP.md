@@ -40,7 +40,7 @@
   5. Crawl can be resumed after interruption without re-downloading already-saved pages
 **Plans**:
 - [x] 02-01-PLAN.md — Document Crawler Implementation
-- [ ] 02-02-PLAN.md — Add Network Retry Logic (Gap Closure)
+- [x] 02-02-PLAN.md — Add Network Retry Logic (Gap Closure)
 
 ### Phase 3: Document Parsing & Chunking
 **Goal**: Raw crawl data is transformed into clean, structured text chunks ready for embedding
