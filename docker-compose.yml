@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  cocos-rag:
+    build: .
+    image: cocos-rag-mcp
+    container_name: cocos-rag
+    environment:
+      # 在宿主机或 CI 的 .env 中提供此环境变量
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # 启用 SSE 模式作为常驻服务
+      - TRANSPORT=sse
+      - MCP_HOST=0.0.0.0
+      - HOST=0.0.0.0
+      - PORT=8000
+    ports:
+      - "8000:8000"
+    volumes:
+      # 非常重要：持久化挂载 Chroma 向量数据库，防止容器销毁后数据丢失
+      - ./.data:/app/.data
+    
+    # -------------------------------------------------------------
+    # 【部署与运行模式说明】
+    # 
+    # 模式一：Stdio (标准输入输出，AI 助手直接调用的默认模式)
+    # 如果你的 AI 客户端（如 Cursor、Claude Desktop）在构建机本地运行：
+    # 1. 不需要在此执行 `docker-compose up -d` 启动常驻服务
+    # 2. 请在 AI 客户端的 MCP 配置中填写以下命令来直接调用容器：
+    #    docker run -i --rm --env-file .env -v /绝对路径/cocos_rag/.data:/app/.data cocos-rag-mcp
+    #
+    # 模式二：SSE (网络 HTTP 接口模式，适合跨机器调用)
+    # 如果你想把它当做一个网络服务，供外部的 AI 客户端连接：
+    # 1. 需要修改 src/server.py 增加 SSE 启动方式，例如 mcp.run(transport='sse')
+    # 2. 此时可以设置 `ports: - "8000:8000"`，并 `docker-compose up -d`
+    # -------------------------------------------------------------
+    
+    # 如果你想它挂起并保留容器做调试，可以取消下面两行注释：
+    # stdin_open: true # docker run -i
+    # tty: true        # docker run -t

@@ -161,10 +161,24 @@ def search_cocos_source(
         return json.dumps({"status": "error", "message": str(e)})
 
 
-def stdio_server():
-    """Run the server using stdio transport."""
-    mcp.run()
+def main_server():
+    """Run the server."""
+    transport = os.environ.get("TRANSPORT", "stdio")
+    if transport == "sse":
+        port = int(os.environ.get("PORT", "8000"))
+        
+        import uvicorn
+        
+        starlette_app = mcp.sse_app(None)
+        uvicorn.run(
+            starlette_app,
+            host="0.0.0.0",
+            port=port,
+            log_level="info",
+        )
+    else:
+        mcp.run()
 
 
 if __name__ == "__main__":
-    stdio_server()
+    main_server()
