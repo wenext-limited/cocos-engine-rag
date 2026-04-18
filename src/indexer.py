@@ -40,6 +40,7 @@ def process_file(
 
     chunks_to_process = []
     ids_to_process = []
+    seen_ids = set()
 
     with open(file_path, "r", encoding="utf-8") as f:
         for line in f:
@@ -48,9 +49,10 @@ def process_file(
             chunk = json.loads(line)
             chunk_id = generate_chunk_id(chunk)
 
-            if chunk_id not in existing_ids:
+            if chunk_id not in existing_ids and chunk_id not in seen_ids:
                 chunks_to_process.append(chunk)
                 ids_to_process.append(chunk_id)
+                seen_ids.add(chunk_id)
 
     logger.info(f"Found {len(chunks_to_process)} new chunks to embed")
 

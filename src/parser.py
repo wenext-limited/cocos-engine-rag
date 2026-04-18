@@ -51,21 +51,55 @@ def parse_html_to_chunks(html_text: str, url: str, version: str) -> List[Dict]:
     current_content = []
     breadcrumbs = []
 
+    def add_chunk(url, version, breadcrumbs, content_text):
+        if not content_text:
+            return
+
+        # OpenAI text-embedding-3-small token limit is 8192.
+        # Safe character limit for mixed Chinese/English is around 4000.
+        MAX_CHARS = 4000
+
+        if len(content_text) <= MAX_CHARS:
+            chunks.append(
+                {
+                    "url": url,
+                    "version": version,
+                    "breadcrumbs": list(breadcrumbs),
+                    "content": content_text,
+                }
+            )
+        else:
+            # Split large content into smaller pieces
+            start = 0
+            part = 1
+            while start < len(content_text):
+                end = start + MAX_CHARS
+                # Try to break at a newline if possible
+                if end < len(content_text):
+                    last_newline = content_text.rfind("\n", start, end)
+                    if last_newline != -1 and last_newline > start + (MAX_CHARS // 2):
+                        end = last_newline
+
+                chunk_part = content_text[start:end].strip()
+                if chunk_part:
+                    chunks.append(
+                        {
+                            "url": url,
+                            "version": version,
+                            "breadcrumbs": list(breadcrumbs) + [f"Part {part}"],
+                            "content": chunk_part,
+                        }
+                    )
+                start = end
+                part += 1
+
     for line in lines:
         match = re.match(r"^(#{1,6})\s+(.*)", line.strip())
         if match:
             # We hit a header. Save the previous chunk if any
             if current_content:
                 content_text = "\n".join(current_content).strip()
-                if content_text:
-                    chunks.append(
-                        {
-                            "url": url,
-                            "version": version,
-                            "breadcrumbs": list(breadcrumbs),
-                            "content": content_text,
-                        }
-                    )
+                add_chunk(url, version, breadcrumbs, content_text)
                 current_content = []
 
             level = len(match.group(1))
@@ -83,17 +117,39 @@ def parse_html_to_chunks(html_text: str, url: str, version: str) -> List[Dict]:
 
     if current_content:
         content_text = "\n".join(current_content).strip()
-        if content_text:
-            chunks.append(
-                {
-                    "url": url,
-                    "version": version,
-                    "breadcrumbs": list(breadcrumbs),
-                    "content": content_text,
-                }
-            )
+        add_chunk(url, version, breadcrumbs, content_text)
 
     return chunks
+
+
+BINARY_FILENAME_PATTERNS = (
+    ".zip.html",
+    ".tar.gz.html",
+    ".rar.html",
+    ".7z.html",
+    ".exe.html",
+    ".dmg.html",
+    ".pkg.html",
+    ".apk.html",
+)
+
+# Minimum readable-text ratio: skip files where >30% of chars are non-printable
+BINARY_CONTENT_THRESHOLD = 0.30
+
+
+def is_binary_html(file_path: str, html_text: str) -> bool:
+    """Return True if the file is a binary asset mistakenly saved as .html."""
+    fname = os.path.basename(file_path).lower()
+    if any(fname.endswith(pat) for pat in BINARY_FILENAME_PATTERNS):
+        return True
+    # Heuristic: count non-printable / replacement chars in first 4KB
+    sample = html_text[:4096]
+    if not sample:
+        return False
+    non_printable = sum(1 for c in sample if ord(c) < 32 and c not in "\n\r\t")
+    if non_printable / len(sample) > BINARY_CONTENT_THRESHOLD:
+        return True
+    return False
 
 
 def process_directory(input_dir: str, output_file: str, base_url: str, version: str):
@@ -111,11 +167,17 @@ def process_directory(input_dir: str, output_file: str, base_url: str, version: 
     print(f"Found {len(html_files)} HTML files.")
 
     total_chunks = 0
+    skipped_binary = 0
     with open(output_file, "w", encoding="utf-8") as out_f:
         for file_path in html_files:
             try:
-                with open(file_path, "r", encoding="utf-8") as f:
+                with open(file_path, "r", encoding="utf-8", errors="replace") as f:
                     html_text = f.read()
+
+                if is_binary_html(file_path, html_text):
+                    print(f"Skipping binary file: {file_path}")
+                    skipped_binary += 1
+                    continue
 
                 # Reconstruct URL from file path
                 rel_path = os.path.relpath(file_path, input_dir)
@@ -127,6 +189,9 @@ def process_directory(input_dir: str, output_file: str, base_url: str, version: 
                     total_chunks += 1
             except Exception as e:
                 print(f"Error processing {file_path}: {e}")
+
+    if skipped_binary:
+        print(f"Skipped {skipped_binary} binary files.")
 
     print(f"Done. Extracted {total_chunks} chunks to {output_file}")
 

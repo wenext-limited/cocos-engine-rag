@@ -7,3 +7,7 @@ __pycache__/
 *.log
 server_out.txt
 *.pyc
+.planning/
+docs/
+oh-my-openagent/
+data/

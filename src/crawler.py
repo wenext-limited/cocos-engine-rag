@@ -23,6 +23,37 @@ def get_file_path(base_dir, url):
     return os.path.join(base_dir, path)
 
 
+SKIP_URL_SUFFIXES = (
+    ".zip",
+    ".tar.gz",
+    ".rar",
+    ".7z",
+    ".exe",
+    ".dmg",
+    ".pkg",
+    ".apk",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".svg",
+    ".ico",
+    ".webp",
+    ".pdf",
+    ".mp4",
+    ".mp3",
+    ".woff",
+    ".woff2",
+    ".ttf",
+)
+
+
+def should_skip_url(url: str) -> bool:
+    """Return True for URLs that point to binary assets, not HTML docs."""
+    lower = url.lower().split("?")[0]
+    return any(lower.endswith(s) for s in SKIP_URL_SUFFIXES)
+
+
 def crawl_docs(start_url, base_dir, version_prefix, delay=0.5):
     print(f"Starting crawl of {start_url} into {base_dir}")
     os.makedirs(base_dir, exist_ok=True)
@@ -92,8 +123,12 @@ def crawl_docs(start_url, base_dir, version_prefix, delay=0.5):
                 urllib.parse.urlparse(next_url)._replace(fragment="")
             )
 
-            # Check if it's within the same version domain
-            if next_url.startswith(version_prefix) and next_url not in visited:
+            # Check if it's within the same version domain and not a binary asset
+            if (
+                next_url.startswith(version_prefix)
+                and next_url not in visited
+                and not should_skip_url(next_url)
+            ):
                 visited.add(next_url)
                 queue.append(next_url)
 

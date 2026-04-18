@@ -16,14 +16,53 @@ class EmbeddingService:
     def get_embeddings(
         self, texts: List[str], batch_size: int = 100
     ) -> List[List[float]]:
+        # Max chars per batch as a safe heuristic for 300,000 tokens limit.
+        # 1 Chinese character is roughly 1-3 tokens.
+        MAX_CHARS_PER_BATCH = 100_000
+
         embeddings = []
-        for i in range(0, len(texts), batch_size):
-            batch = texts[i : i + batch_size]
+
+        # dynamic batching
+        batches = []
+        current_batch = []
+        current_chars = 0
+
+        for text in texts:
+            text_len = len(text)
+            if current_chars + text_len > MAX_CHARS_PER_BATCH and current_batch:
+                batches.append(current_batch)
+                current_batch = [text]
+                current_chars = text_len
+            elif len(current_batch) >= batch_size:
+                batches.append(current_batch)
+                current_batch = [text]
+                current_chars = text_len
+            else:
+                current_batch.append(text)
+                current_chars += text_len
+
+        if current_batch:
+            batches.append(current_batch)
+
+        for idx, batch in enumerate(batches):
             try:
                 response = openai.embeddings.create(input=batch, model=self.model)
                 embeddings.extend([data.embedding for data in response.data])
             except Exception as e:
-                logger.error(f"Error generating embeddings: {e}")
-                raise
-            time.sleep(0.5)  # Basic rate limiting
+                logger.error(
+                    f"Error generating embeddings for batch {idx} ({len(batch)} items): {e}"
+                )
+                logger.warning(f"Falling back to individual embedding for batch {idx}")
+                for text in batch:
+                    try:
+                        resp = openai.embeddings.create(input=[text], model=self.model)
+                        embeddings.extend([data.embedding for data in resp.data])
+                        time.sleep(0.1)
+                    except Exception as inner_e:
+                        logger.error(
+                            f"Failed to embed single text ({len(text)} chars): {inner_e}"
+                        )
+                        raise inner_e
+            time.sleep(0.2)  # Basic rate limiting
+
         return embeddings
