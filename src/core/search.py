@@ -103,7 +103,7 @@ class SearchService:
         return bm25, doc_ids, documents
 
     def search(
-        self, query: str, version: str = "3.8.8", top_k: int = 5
+        self, query: str, version: str = "3.8.8", top_k: int = 5, api_key: str = None
     ) -> List[Dict[str, Any]]:
         """
         Hybrid search: BM25 + vector, merged with RRF.
@@ -113,6 +113,12 @@ class SearchService:
             f"Searching docs for '{query}' in version {version} (top_k={top_k})"
         )
 
+        # Temporary override of global api_key if provided
+        import openai
+        original_api_key = openai.api_key
+        if api_key:
+            openai.api_key = api_key
+            
         try:
             # Retrieve more candidates for fusion, then trim to top_k
             candidate_k = min(top_k * 4, 50)
@@ -211,6 +217,9 @@ class SearchService:
         except Exception as e:
             logger.error(f"Search failed: {e}")
             raise
+        finally:
+            if api_key:
+                openai.api_key = original_api_key
 
 
 # ---------------------------------------------------------------------------
@@ -268,6 +277,7 @@ class CodeSearchService:
         language: Optional[str] = None,
         class_name: Optional[str] = None,
         rerank: Optional[bool] = None,
+        api_key: str = None,
     ) -> List[Dict[str, Any]]:
         """
         Hybrid search over source code chunks.
@@ -280,6 +290,7 @@ class CodeSearchService:
             class_name: Optional filter: restrict to a specific class.
             rerank: Whether to apply LLM reranking. Defaults to env-controlled
                 value (`COCOS_RAG_RERANK`, default on).
+            api_key: Optional OpenAI API key to use for this specific query.
 
         Returns:
             List of result dicts with code content, metadata, and relevance scores.
@@ -289,6 +300,11 @@ class CodeSearchService:
             f"Searching code for '{query}' in {collection_name} "
             f"(top_k={top_k}, language={language}, class_name={class_name})"
         )
+
+        import openai
+        original_api_key = openai.api_key
+        if api_key:
+            openai.api_key = api_key
 
         try:
             candidate_k = min(top_k * 4, 50)
@@ -440,6 +456,9 @@ class CodeSearchService:
         except Exception as e:
             logger.error(f"Code search failed: {e}")
             raise
+        finally:
+            if api_key:
+                openai.api_key = original_api_key
 
     def _build_where_filter(
         self, language: Optional[str], class_name: Optional[str]

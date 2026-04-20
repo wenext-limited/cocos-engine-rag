@@ -38,7 +38,9 @@ def fix_encoding(text: str) -> str:
 
 
 @mcp.tool()
-def search_cocos_docs(query: str, version: str = "3.8.8", top_k: int = 5) -> str:
+def search_cocos_docs(
+    query: str, version: str = "3.8.8", top_k: int = 5, openai_api_key: str = ""
+) -> str:
     """
     Search Cocos Creator documentation using RAG.
 
@@ -46,12 +48,13 @@ def search_cocos_docs(query: str, version: str = "3.8.8", top_k: int = 5) -> str
         query: The search query string.
         version: The Cocos Creator version ('3.8.8' or '3.7.3'). Default is '3.8.8'.
         top_k: Number of results to return. Default is 5.
+        openai_api_key: Optional OpenAI API key to use for this specific query. If not provided, uses the server's default key.
 
     Returns:
         JSON string containing the top relevant chunks.
     """
     try:
-        results = search_service.search(query=query, version=version, top_k=top_k)
+        results = search_service.search(query=query, version=version, top_k=top_k, api_key=openai_api_key)
 
         if not results:
             return json.dumps(
@@ -94,6 +97,7 @@ def search_cocos_source(
     top_k: int = 5,
     language: str = "all",
     class_name: str = "",
+    openai_api_key: str = "",
 ) -> str:
     """
     Search Cocos Creator engine source code (TypeScript + C++).
@@ -108,6 +112,7 @@ def search_cocos_source(
         top_k: Number of results to return. Default is 5.
         language: Filter by language: 'typescript', 'cpp', or 'all'. Default is 'all'.
         class_name: Optional: restrict search to a specific class (e.g., 'Node', 'Sprite').
+        openai_api_key: Optional OpenAI API key to use for this specific query. If not provided, uses the server's default key.
 
     Returns:
         JSON string containing matching source code chunks with metadata.
@@ -119,6 +124,7 @@ def search_cocos_source(
             top_k=top_k,
             language=language if language != "all" else None,
             class_name=class_name if class_name else None,
+            api_key=openai_api_key,
         )
 
         if not results:
