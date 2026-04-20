@@ -12,6 +12,11 @@ import httpx
 import traceback
 from urllib.parse import urljoin
 
+# Force UTF-8 for stdio to avoid encoding issues on Windows
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stdin.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
+
 async def proxy_sse_to_stdio(sse_url: str):
     headers = {"Host": "localhost:18000"}
     
@@ -33,17 +38,18 @@ async def proxy_sse_to_stdio(sse_url: str):
                             event_block, buffer = buffer.split("\n\n", 1)
                             lines = event_block.split("\n")
                             event_type = "message"
-                            data = ""
+                            data_lines = []
                             for line in lines:
                                 if line.startswith("event: "):
                                     event_type = line[7:]
                                 elif line.startswith("data: "):
-                                    data = line[6:]
+                                    data_lines.append(line[6:])
+                            data = "\n".join(data_lines)
                             
                             if event_type == "endpoint":
                                 post_endpoint = urljoin(sse_url, data)
                                 print(f"Connected. Post endpoint: {post_endpoint}", file=sys.stderr)
-                            elif event_type == "message":
+                            elif event_type == "message" and data:
                                 try:
                                     sys.stdout.write(data + "\n")
                                     sys.stdout.flush()
@@ -63,6 +69,16 @@ async def proxy_sse_to_stdio(sse_url: str):
                         # Wait for endpoint
                         while not post_endpoint:
                             await asyncio.sleep(0.1)
+                            
+                        try:
+                            req = json.loads(line)
+                            if req.get("method") == "tools/call" and "params" in req and "arguments" in req["params"]:
+                                args = req["params"]["arguments"]
+                                if "openai_api_key" in args:
+                                    del args["openai_api_key"]
+                                    line = json.dumps(req)
+                        except Exception:
+                            pass
                             
                         try:
                             post_headers = {**headers, "Content-Type": "application/json"}
