@@ -1,13 +1,16 @@
 FROM python:3.12-slim
 
-# 安装 uv，设置工作目录
-RUN pip install uv
+# 安装 uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# 设置工作目录
 WORKDIR /app
 
-# 先复制依赖文件进行安装，利用 Docker 缓存加速
+# 先复制依赖文件并进行预安装，利用 Docker 缓存加速依赖层
 COPY pyproject.toml uv.lock ./
 
 # 安装依赖
+# 将 .venv 放在工作目录下
 RUN uv sync --frozen --no-dev
 
 # 复制项目代码
@@ -15,11 +18,12 @@ COPY src/ ./src/
 COPY main.py ./
 
 # 确保持久化数据目录存在
+# 注意服务器部署时可能需要挂载 /app/.data 到宿主机以保存 Chroma 数据库
 RUN mkdir -p /app/.data/chroma_db
 
-# 暴露 SSE 可能使用的端口（仅供参考）
+# 暴露服务端口
 EXPOSE 8000
 
-# 默认使用 stdio 模式运行（最常用的 MCP 客户端连接方式）
 ENV PYTHONPATH=/app/src
-ENTRYPOINT ["/app/.venv/bin/python", "-m", "src.server"]
+# 激活 python virtual environment 并运行服务器
+ENTRYPOINT ["uv", "run", "python", "-m", "src.server"]
