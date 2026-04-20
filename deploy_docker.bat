@@ -27,6 +27,8 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+:: 2.5 停止并清理同名的旧容器（防止端口和名称冲突）
+docker rm -f cocos-rag >nul 2>nul
 echo [信息] Docker 环境检测通过，准备构建并启动容器...
 echo.
 
@@ -53,10 +55,10 @@ echo ===================================================
 echo.
 echo [MCP 连接信息]
 echo 你的 MCP 服务现在支持 SSE (Server-Sent Events) 模式。
-echo 如果在本机连接，URL 为: http://localhost:8000/sse
+echo 如果在本机连接，URL 为: http://localhost:18000/sse
 echo.
 echo 如果在其他电脑连接，请把 localhost 替换为这台机器的局域网 IP:
-echo 例如: http://192.168.x.x:8000/sse
+echo 例如: http://192.168.x.x:18000/sse
 echo.
 echo [管理指令]
 echo 查看运行日志: docker logs -f cocos-rag
