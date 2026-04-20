@@ -1,4 +1,4 @@
-﻿# /// script
+# /// script
 # requires-python = ">=3.10"
 # dependencies = [
 #     "httpx",
@@ -28,7 +28,7 @@ async def proxy_sse_to_stdio(sse_url: str):
                     nonlocal post_endpoint
                     buffer = ""
                     async for chunk in response.aiter_text():
-                        buffer += chunk
+                        buffer += chunk.replace("\r\n", "\n").replace("\r", "\n")
                         while "\n\n" in buffer:
                             event_block, buffer = buffer.split("\n\n", 1)
                             lines = event_block.split("\n")
@@ -65,7 +65,8 @@ async def proxy_sse_to_stdio(sse_url: str):
                             await asyncio.sleep(0.1)
                             
                         try:
-                            resp = await client.post(post_endpoint, content=line, headers=headers)
+                            post_headers = {**headers, "Content-Type": "application/json"}
+                            resp = await client.post(post_endpoint, content=line, headers=post_headers)
                             if resp.status_code >= 400:
                                 print(f"POST Error: {resp.status_code} {resp.text}", file=sys.stderr)
                         except Exception as e:
