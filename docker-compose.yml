@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
       # SSE 模式：作为常驻 HTTP 服务对外暴露
       - TRANSPORT=sse
       - PORT=8000
