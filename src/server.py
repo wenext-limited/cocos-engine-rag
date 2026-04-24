@@ -13,12 +13,19 @@ import os
 import json
 from core.config import load_env
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 from core.search import SearchService, CodeSearchService
 
 load_env()
 logging.basicConfig(level=logging.INFO, filename="mcp_server.log")
 
-mcp = FastMCP("Cocos RAG Server")
+# Disable DNS rebinding protection: this server is accessed via a CLI stdio
+# proxy (remote_proxy.py), not a browser, so Host/Origin validation causes
+# spurious 421 errors when the client Host header doesn't match the server IP.
+mcp = FastMCP(
+    "Cocos RAG Server",
+    transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
+)
 api_key = os.environ.get("OPENAI_API_KEY")
 if not api_key:
     logging.warning("OPENAI_API_KEY not set — searches will fail")
