@@ -32,7 +32,7 @@
 | Embedding 模型 | OpenAI `text-embedding-3-small` |
 | 关键词检索 | `rank-bm25`（中文按字、英文按词分词） |
 | 融合策略 | Reciprocal Rank Fusion (RRF) |
-| Rerank（可选） | OpenAI `gpt-4o-mini`（默认开启，可关闭） |
+| Rerank（可选） | OpenAI `gpt-5.4-mini`（默认开启，可关闭） |
 | 源码解析 | tree-sitter（`tree-sitter-typescript` + `tree-sitter-cpp`） |
 | MCP SDK | `mcp>=1.27.0`（FastMCP，stdio transport） |
 | HTML 解析 | BeautifulSoup4 |
@@ -119,7 +119,7 @@ BM25 召回 + 向量召回         |  BM25 召回 + 向量召回（支持 langua
    ↓                        |     ↓
 RRF 融合（top 4×k 候选）    |  RRF 融合（top 4×k 候选）
    ↓                        |     ↓
-（可选）LLM Rerank          |  （可选）LLM Rerank（gpt-4o-mini，默认开启）
+（可选）LLM Rerank          |  （可选）LLM Rerank（gpt-5.4-mini，默认开启）
    ↓                        |     ↓
 Top-K 结果（JSON）          |  Top-K 结果（含 GitHub 行级链接）
 ```
@@ -146,7 +146,7 @@ Copy-Item .env.example .env
 | 变量 | 默认 | 说明 |
 |------|------|------|
 | `OPENAI_API_KEY` | — | 必填 |
-| `OPENAI_RERANK_MODEL` | `gpt-4o-mini` | LLM Rerank 使用的模型 |
+| `OPENAI_RERANK_MODEL` | `gpt-4o-mini` (已修改为 `gpt-5.4-mini`) | LLM Rerank 使用的模型 |
 | `COCOS_RAG_RERANK` | `1` | 设为 `0` 全局关闭 LLM Rerank |
 
 ### 3. 文档侧（已有数据可跳过）
@@ -253,7 +253,7 @@ BFS 爬取 docs.cocos.com 指定版本的中文文档。
 2. **BM25 召回**：tokenize（英文按词、中文按字）→ `rank_bm25.BM25Okapi` 全量打分，取相同数量候选
    - BM25 索引按 collection 缓存在内存中，首次查询会全量拉取一次（~40k 文档约几秒）
 3. **RRF 融合**：`score = Σ 1 / (k + rank_i)`，k=60
-4. **（可选）LLM Rerank**：将融合后的候选连同 query 一并发给 `gpt-4o-mini`，要求按 0~10 打分；最终分数 = `0.7 × LLM 分 + 0.3 × 检索分`，重新排序后截断到 top_k
+4. **（可选）LLM Rerank**：将融合后的候选连同 query 一并发给 `gpt-5.4-mini`，要求按 0~10 打分；最终分数 = `0.7 × LLM 分 + 0.3 × 检索分`，重新排序后截断到 top_k
 
 Rerank 默认开启，可通过环境变量 `COCOS_RAG_RERANK=0` 全局关闭，或在 `CodeSearchService.search(rerank=False)` 单次禁用。
 
@@ -357,6 +357,8 @@ Rerank 默认开启，可通过环境变量 `COCOS_RAG_RERANK=0` 全局关闭，
       "env": {
         "PYTHONPATH": "src",
         "OPENAI_API_KEY": "YOUR_OPENAI_API_KEY"
+        "OPENAI_RERANK_MODEL": "gpt-5.4-mini",
+        "PYTHONIOENCODING": "utf-8"
       },
       "cwd": "C:\\path\\to\\cocos_rag"
     }

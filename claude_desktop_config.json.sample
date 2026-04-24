@@ -2,17 +2,16 @@
   "mcpServers": {
     "cocos-rag": {
       "command": "uv",
-      "args": [
-        "run",
-        "python",
-        "-m",
-        "src.server"
-      ],
+      "args": ["run", "python", "-m", "src.server"],
       "env": {
         "PYTHONPATH": "src",
         "OPENAI_API_KEY": "YOUR_OPENAI_API_KEY"
+        "OPENAI_RERANK_MODEL": "gpt-5.4-mini",
+        "PYTHONIOENCODING": "utf-8"
       },
       "cwd": "C:\\path\\to\\cocos_rag"
     }
+  }
+}
   }
 }
