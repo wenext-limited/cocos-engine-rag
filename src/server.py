@@ -172,16 +172,19 @@ def main_server():
     transport = os.environ.get("TRANSPORT", "stdio")
     if transport == "sse":
         port = int(os.environ.get("PORT", "8000"))
-        
+
+        import asyncio
         import uvicorn
-        
-        starlette_app = mcp.sse_app(None)
-        uvicorn.run(
+
+        starlette_app = mcp.sse_app()
+        config = uvicorn.Config(
             starlette_app,
             host="0.0.0.0",
             port=port,
             log_level="info",
         )
+        server = uvicorn.Server(config)
+        asyncio.run(server.serve())
     else:
         mcp.run()
 
