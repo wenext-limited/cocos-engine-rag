@@ -3,6 +3,7 @@ import logging
 import time
 from typing import List, Dict, Any
 import openai
+import httpx
 
 logger = logging.getLogger(__name__)
 
@@ -12,6 +13,14 @@ class EmbeddingService:
         if api_key:
             openai.api_key = api_key
         self.model = model
+        
+        # Add debugging for HTTP requests
+        self._http_client = httpx.Client(
+            event_hooks={'request': [lambda r: logger.info(f"Req: {r.method} {r.url}")],
+                         'response': [lambda r: logger.info(f"Res: {r.status_code} {r.url}")]},
+            timeout=15.0 # Set explicit timeout so it fails fast instead of hanging
+        )
+        openai.http_client = self._http_client
 
     def get_embeddings(
         self, texts: List[str], batch_size: int = 100
@@ -46,7 +55,10 @@ class EmbeddingService:
 
         for idx, batch in enumerate(batches):
             try:
+                logger.info(f"Sending batch {idx} with {len(batch)} items to model {self.model}...")
+                start_t = time.time()
                 response = openai.embeddings.create(input=batch, model=self.model)
+                logger.info(f"Batch {idx} succeeded in {time.time()-start_t:.2f}s")
                 embeddings.extend([data.embedding for data in response.data])
             except Exception as e:
                 logger.error(

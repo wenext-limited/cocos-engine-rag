@@ -140,6 +140,7 @@ class LLMReranker:
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             max_tokens=400,
+            timeout=15.0 # Set explicit timeout so it fails fast instead of hanging
         )
         raw = (resp.choices[0].message.content or "").strip()
         return self._parse_scores(raw, n=len(candidates))
