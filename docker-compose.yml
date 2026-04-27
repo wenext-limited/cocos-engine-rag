@@ -13,6 +13,8 @@ services:
     ports:
       # 宿主机 18000 → 容器 8000
       - "18000:8000"
+    extra_hosts:
+      - "litellm.wenext.technology:10.201.32.15"
     volumes:
       # 持久化挂载 Chroma 向量数据库，容器销毁后数据不丢失
       - ./.data:/app/.data
